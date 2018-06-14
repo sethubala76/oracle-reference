@@ -1,0 +1,13 @@
+DBA RAC Shutdown steps in Unix level
+> srvctl status database -d <INST_NAME>
+Need to run as root one node at a time
+
+Node 1:
+/u01/app/grid/product/11gR2/bin/crsctl stop crs
+/u01/app/grid/product/11gR2/bin/crsctl disable crs
+
+Node 2:
+/u01/app/grid/product/11gR2/bin/crsctl stop crs
+/u01/app/grid/product/11gR2/bin/crsctl disable crs
+
+
