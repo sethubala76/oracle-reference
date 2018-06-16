@@ -1,4 +1,5 @@
 DBA RAC Shutdown steps in Unix level
+> ps -ef | grep pmon
 > srvctl status database -d <INST_NAME>
 Need to run as root one node at a time
 
@@ -10,4 +11,16 @@ Node 2:
 /u01/app/grid/product/11gR2/bin/crsctl stop crs
 /u01/app/grid/product/11gR2/bin/crsctl disable crs
 
+Health check of the DB instance.
+> ps -ef | grep d.bin
+> ps -ef | grep pmon
+
+Node 1
+# To start the DB RAC services back by root id
+/u01/app/grid/product/11gR2/bin/crsctl start crs
+/u01/app/grid/product/11gR2/bin/crsctl enable crs
+
+Node 2:
+/u01/app/grid/product/11gR2/bin/crsctl start crs
+/u01/app/grid/product/11gR2/bin/crsctl enable crs
 
