@@ -18,9 +18,52 @@ Health check of the DB instance.
 Node 1
 # To start the DB RAC services back by root id
 /u01/app/grid/product/11gR2/bin/crsctl start crs
+CRS-4123: Oracle High Availability Services has been started.
 /u01/app/grid/product/11gR2/bin/crsctl enable crs
+CRS-4622: Oracle High Availability Services autostart is enabled.
 
 Node 2:
 /u01/app/grid/product/11gR2/bin/crsctl start crs
 /u01/app/grid/product/11gR2/bin/crsctl enable crs
 
+root@[host_name]# /u01/app/grid/product/11gR2/bin/crsctl check crs
+root@[host_name]# /u01/app/grid/product/11gR2/bin/srvctl start filesystem -d /dev/asm/ora_dump-31
+
+root@[host_name][PRD][oraInventory] # /opt/DynamicLinkManager/bin/dlnkmgr view -path
+
+root@[host_name][PRD][oraInventory] # /u01/app/grid/product/11gR2/bin/asmcmd volinfo -a
+
+---------------------------------------------------------
+show parameter cpu_count
+srvctl status service -d <Service name>
+
+srvctl config service -d <Service name> -s <service_instance_1> | grep -i instances*
+srvctl config service -d <Service name> -s <service_instance_2>  | grep -i instances*
+
+select name, open_mode from v$database;
+
+> crsctl check cluster -all
+select name,TOTAL_MB,FREE_MB,USABLE_FILE_MB from v$asm_diskgroup;
+
+
+
+#Oracle commands
+oracle@<SERVICE_NAME> compute sum of Max on report
+oracle@<SERVICE_NAME> break on tablespace_name on report nodup
+oracle@<SERVICE_NAME> select tablespace_name,file_name,autoextensible,(maxbytes)/1024/1024/1024 Max,sum(bytes)/1024/1024/1024 from dba_temp_files group by tablespace_name,file_name,autoextensible,maxbytes order by tablespace_name;
+oracle@<SERVICE_NAME> select NAME,TYPE,TOTAL_MB,FREE_MB,USABLE_FILE_MB from v$asm_diskgroup;
+
+[oracle@host_name]> srvctl config service -d <instance_name> -s <service_name>
+oracle@<host_name>:/home/oracle []
+> lscpu
+
+# Required DBA monitoring.......
+
+-	Server load (CPU/Memory)
+-	Cluster status
+-	Node eviction 
+-	Instance eviction
+-	Blocking sessions
+-	Mount point size
+-	Tablespace utilization 
+-	Backup reports 
